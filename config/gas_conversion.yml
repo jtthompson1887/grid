@@ -1,0 +1,21 @@
+default_fallback_calorific_value_kwh_per_m3: null
+units:
+  kwh:
+    to_mwh_factor: 0.001
+    requires_calorific_value: false
+  mwh:
+    to_mwh_factor: 1.0
+    requires_calorific_value: false
+  gwh:
+    to_mwh_factor: 1000.0
+    requires_calorific_value: false
+  therms:
+    to_mwh_factor: 0.0293071
+    requires_calorific_value: false
+  mcm:
+    conversion_method: volume_to_energy
+    requires_calorific_value: true
+    m3_per_mcm: 1000000
+  m3:
+    conversion_method: volume_to_energy
+    requires_calorific_value: true

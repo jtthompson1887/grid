@@ -1,0 +1,65 @@
+feature_groups:
+  recent_demand:
+    - lag_1h
+    - lag_2h
+    - lag_24h
+    - lag_48h
+    - lag_168h
+    - rolling_mean_3h
+    - rolling_mean_24h
+    - rolling_mean_168h
+    - same_hour_last_week
+    - same_hour_4_week_average
+  weather_temperature:
+    - gb_temperature_2m_c
+    - gb_apparent_temperature_c
+    - heating_degree_hours
+    - cooling_degree_hours
+    - heating_degree_rolling_24h
+    - heating_degree_rolling_72h
+    - cooling_degree_rolling_24h
+    - cooling_degree_rolling_72h
+    - cold_snap_indicator
+    - heatwave_indicator
+  weather_wind:
+    - gb_wind_speed_10m_ms
+  weather_solar_cloud:
+    - gb_shortwave_radiation_wm2
+    - gb_cloud_cover_percent
+  weather_precipitation:
+    - gb_precipitation_mm
+    - gb_relative_humidity_percent
+  calendar:
+    - day_of_week
+    - day_of_month
+    - month
+    - day_of_year
+    - is_weekend
+    - is_bank_holiday
+    - days_to_next_bank_holiday
+    - days_since_previous_bank_holiday
+    - is_christmas_period
+    - is_new_year_period
+    - is_dst_transition_day
+  seasonality:
+    - hour_of_day_sin
+    - hour_of_day_cos
+    - month_sin
+    - month_cos
+    - day_of_year_sin
+    - day_of_year_cos
+  horizon:
+    - forecast_horizon_hours
+    - forecast_horizon_regime
+  gas_system_features:
+    - calorific_value_used
+    - recent_lag_available
+  electricity_system_features:
+    - electricity_national_demand_mwh
+templates:
+  electricity_above:
+    - Electricity forecast is above seasonal normal mainly because of recent demand strength, time-of-day pattern and colder-than-normal temperature.
+  gas_above:
+    - Gas forecast is above seasonal normal mainly because of heating degree hours, accumulated cold over the previous 72 hours and winter seasonality.
+  high_uncertainty:
+    - Forecast uncertainty is high because the target time is outside the reliable deterministic weather forecast range.
