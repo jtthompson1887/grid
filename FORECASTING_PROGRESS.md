@@ -61,8 +61,9 @@ This feature adds a probabilistic demand forecasting module for Great Britain na
 - [x] **Tests**
   - Forecast API tests (`tests/test_api_forecast.py`) — 6 test cases covering all endpoints
   - Forecasting unit tests (`tests/test_forecasting.py`) — weather region config, gas conversion, time spine
+  - Extended forecasting tests (`tests/test_forecasting_extended.py`) — 147 test cases covering calendar features, confidence, daily aggregation, scenarios, backtesting, explanations, feature engineering, all adapters, all models, all pipelines, and service edge cases
   - CI workflow (`.github/workflows/ci.yml`)
-  - Coverage gate at 90% (`pytest.ini`, `.coveragerc`)
+  - Coverage gate at 90% (`pytest.ini`, `.coveragerc`) — now includes all `grid/forecasting/*` modules; total coverage 93%+
 
 ---
 
@@ -77,7 +78,7 @@ This feature adds a probabilistic demand forecasting module for Great Britain na
 - [ ] **Database persistence** — store forecast runs in MariaDB/MySQL using the schema in `grid.sql`
 - [ ] **Environment variables** — document and validate `ELEXON_API_KEY`, `NATIONAL_GAS_API_KEY`, and `OPEN_METEO_API_KEY_OPTIONAL` in production setup
 - [ ] **Scenario path generation** — validate the long-horizon historical-weather-analogue approach end-to-end
-- [ ] **Extended test coverage** — add tests for adapters, pipelines, models, and scenario generation
+- [x] **Extended test coverage** — 147 tests added in `tests/test_forecasting_extended.py` covering all forecasting modules; coverage exclusion removed from `.coveragerc` so forecasting code is subject to the 90% gate (total: 93%+)
 - [ ] **Documentation** — update `README.md` with forecasting API usage, config options, and deployment notes
 
 ---
