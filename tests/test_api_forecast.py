@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 
 from grid.api.main import app
-from grid.forecasting.service import forecast_service
+from grid.forecasting.service import service as forecast_service
 
 
 class TestForecastApi:
@@ -43,3 +43,43 @@ class TestForecastApi:
         body = response.json()
         assert 'latest_forecast_run' in body
         assert 'calibration_status' in body
+
+    def test_backtest_summary_endpoint(self):
+        with TestClient(app) as client:
+            response = client.get('/api/forecast/backtest-summary')
+        assert response.status_code == 200
+        assert 'rows' in response.json()
+
+    def test_explanation_endpoints_not_found(self):
+        with TestClient(app) as client:
+            hourly = client.get(
+                '/api/forecast/explain/hourly',
+                params={
+                    'forecast_run_id': 'missing',
+                    'fuel_type': 'electricity',
+                    'target_time_utc': '2026-01-01T01:00:00Z',
+                },
+            )
+            daily = client.get(
+                '/api/forecast/explain/daily',
+                params={
+                    'forecast_run_id': 'missing',
+                    'fuel_type': 'gas',
+                    'date_local': '2026-01-01',
+                },
+            )
+        assert hourly.status_code == 404
+        assert daily.status_code == 404
+
+    def test_hourly_endpoint_seeds_when_empty(self):
+        forecast_service.store.latest_forecast_run = None
+        with TestClient(app) as client:
+            response = client.get(
+                '/api/forecast/hourly',
+                params={
+                    'fuel_type': 'electricity',
+                    'start_time_utc': '2026-01-01T00:00:00',
+                    'end_time_utc': '2026-01-02T00:00:00',
+                },
+            )
+        assert response.status_code == 200
