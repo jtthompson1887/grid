@@ -21,20 +21,6 @@ services:
       timeout: 5s
       retries: 5
 
-  php:
-    build:
-      target: php
-    depends_on:
-      database:
-        condition: service_healthy
-    volumes:
-      - ./.env:/var/grid/.env
-      - ./update.php:/var/grid/update.php
-      - ./classes:/var/grid/classes
-      - ./public:/var/grid/public
-    command:
-      sh -c "php /var/grid/update.php && sleep infinity"
-
   python-api:
     build:
       target: python

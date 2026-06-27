@@ -1,6 +1,3 @@
-FROM php:8.3-cli-alpine AS php
-RUN docker-php-ext-install mysqli
-
 FROM python:3.12-alpine AS python
 WORKDIR /var/grid
 COPY requirements.txt .

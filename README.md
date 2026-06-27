@@ -19,7 +19,7 @@ Once the containers are running, you can view the site at [http://localhost:9714
 To run the update script:
 
 ```
-docker compose exec php php /var/grid/update.php
+docker compose exec python-updater python /var/grid/update.py
 ```
 
 To stop the containers:
@@ -30,13 +30,13 @@ docker compose down
 
 ## Production
 
-The production environment does not use Docker, instead running directly on the server. PHP 8.3 and a recent version MariaDB or MySQL are required.
+The production environment does not use Docker, instead running directly on the server. Python 3.12 and a recent version MariaDB or MySQL are required.
 
 ### Files
 
 Copy `.env.example` to `.env` and edit the values as appropriate. At a minimum, `DATABASE_PASSWORD` must be given a value. `DATABASE_HOSTNAME` should be changed to `localhost` if the database is running on the same server.
 
-Upload `.env`, `update.php`, and the `classes` and `public` directories to the server.
+Upload `.env`, `update.py`, and the `grid` directory to the server.
 
 ### Database
 
@@ -44,11 +44,11 @@ Create a database and a user with `SELECT`, `INSERT`, `UPDATE`, and `DELETE` pri
 
 ### Web server
 
-Configure the server to serve the contents of the `public` directory. Note that this directory contains only static files, so the web server does not need to support PHP.
+Configure the server to host the frontend and route API requests to the Python API service.
 
 ### Cron
 
-Set up a cron job to execute the `update.php` script (using the [PHP CLI SAPI](https://www.php.net/manual/en/features.commandline.usage.php)) every five minutes. The cron job must run as a user with write access to `public/favicon.svg` and `public/index.html`.
+Set up a cron job to execute `update.py` (using Python) every five minutes.
 
 The script outputs details of the update process to standard output, and details of errors to standard error. An error with an individual data source does not abort the rest of the update process.
 
@@ -62,13 +62,13 @@ National Grid: Live uses [Cloudflare](https://www.cloudflare.com/)’s content d
 
 ## Codebase structure
 
-PHP classes can be found in the `classes` directory. The [Database](classes/Database.php) class directly within this directory is responsible for all database access. The other classes are divided into three namespaces:
+Python modules can be found in the `grid` directory. The [database module](grid/database.py) is responsible for all database access. The other modules are divided into three packages:
 
-The [Data](classes/Data) namespace contains classes for reading data from the various data sources, as documented further below.
+The [data](grid/data) package contains modules for reading data from the various data sources, as documented further below.
 
-The [State](classes/State) namespace contains classes representing the data needed to output the user interface. The [State](classes/State/State.php) class is the overall container; an instance of this class is returned by the `getState()` method of a `Database` instance.
+The [state](grid/state) package contains classes representing the data needed to output responses.
 
-The [UI](classes/UI) namespace contains classes that output the user interface. The [UI](classes/UI/UI.php) class has overall responsibility for outputting the HTML, while the [Favicon](classes/UI/Favicon.php) class outputs the dynamically-updated favicon.
+The [ui](grid/ui) package contains classes for UI-specific formatting, including favicon generation.
 
 ## Data sources
 
@@ -78,7 +78,7 @@ This API, developed by Elexon, reports power generation connected to the nationa
 
 Data is available in JSON format at 30-minute or 5-minute granularity.
 
-PHP classes: [Generation](classes/Data/Generation.php), [Pricing](classes/Data/Pricing.php)
+Python modules: [generation](grid/data/generation.py), [pricing](grid/data/pricing.py)
 
 ### [National Energy System Operator Data Portal](https://www.neso.energy/data-portal)
 
@@ -86,7 +86,7 @@ This API, developed by the National Energy System Operator, estimates power gene
 
 Data is available in CSV format at 30-minute granularity. Estimates may be retrospectively updated.
 
-PHP class: [Demand](classes/Data/Demand.php)
+Python module: [demand](grid/data/demand.py)
 
 ### [Carbon Intensity API](https://carbonintensity.org.uk/)
 
@@ -94,7 +94,7 @@ This API, developed by the National Energy System Operator and the University Of
 
 Data is available in JSON format at 30-minute granularity. Estimates may be retrospectively updated.
 
-PHP class: [Emissions](classes/Data/Emissions.php)
+Python module: [emissions](grid/data/emissions.py)
 
 ## Future plans
 
