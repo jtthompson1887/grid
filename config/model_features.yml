@@ -1,0 +1,62 @@
+shared_calendar_features:
+  - hour_of_day_sin
+  - hour_of_day_cos
+  - day_of_week
+  - day_of_month
+  - month
+  - month_sin
+  - month_cos
+  - day_of_year
+  - day_of_year_sin
+  - day_of_year_cos
+  - is_weekend
+  - is_bank_holiday
+  - days_to_next_bank_holiday
+  - days_since_previous_bank_holiday
+  - is_christmas_period
+  - is_new_year_period
+  - is_dst_transition_day
+  - forecast_horizon_hours
+  - forecast_horizon_regime
+weather_features:
+  - gb_temperature_2m_c
+  - gb_apparent_temperature_c
+  - gb_wind_speed_10m_ms
+  - gb_cloud_cover_percent
+  - gb_shortwave_radiation_wm2
+  - gb_precipitation_mm
+  - gb_relative_humidity_percent
+weather_derived_features:
+  - heating_degree_hours
+  - cooling_degree_hours
+  - temperature_change_24h
+  - temperature_change_72h
+  - heating_degree_rolling_24h
+  - heating_degree_rolling_72h
+  - cooling_degree_rolling_24h
+  - cooling_degree_rolling_72h
+  - cold_snap_indicator
+  - heatwave_indicator
+demand_lag_features:
+  electricity:
+    - lag_1h
+    - lag_2h
+    - lag_24h
+    - lag_48h
+    - lag_168h
+    - rolling_mean_3h
+    - rolling_mean_24h
+    - rolling_mean_168h
+    - same_hour_last_week
+    - same_hour_4_week_average
+  gas:
+    - lag_1h
+    - lag_2h
+    - lag_24h
+    - lag_48h
+    - lag_168h
+    - rolling_mean_3h
+    - rolling_mean_24h
+    - rolling_mean_168h
+    - same_hour_last_week
+    - same_hour_4_week_average

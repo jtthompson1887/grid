@@ -1,0 +1,55 @@
+label: Great Britain national electricity and gas demand forecast
+geography_scope: great_britain
+forecast:
+  min_horizon_hours: 1
+  max_horizon_hours: 8760
+  issue_times_utc:
+    - "00:00"
+    - "06:00"
+    - "12:00"
+    - "18:00"
+  regimes:
+    operational_forecast:
+      min_horizon_hours: 1
+      max_horizon_hours: 72
+      dashboard_label: Operational forecast
+    extended_weather_forecast:
+      min_horizon_hours: 73
+      max_horizon_hours: 840
+      dashboard_label: Extended weather forecast
+    planning_scenario_forecast:
+      min_horizon_hours: 841
+      max_horizon_hours: 8760
+      dashboard_label: Planning scenario forecast
+      weather_mode: historical_weather_analogue
+      scenario_window_days: 14
+      min_scenario_paths: 30
+      target_scenario_paths: 100
+confidence_score:
+  initial:
+    short_term: 90
+    medium_term: 70
+    long_term: 45
+  adjustments:
+    weather_partially_missing: -10
+    gas_conversion_fallback_used: -10
+    scenario_paths_below_minimum: -15
+    model_uncalibrated: -10
+    baseline_only: -20
+outputs:
+  quantiles: [p05, p10, p25, p50, p75, p90, p95]
+  fuel_types: [electricity, gas, combined]
+error_states:
+  - source_unavailable
+  - insufficient_history
+  - missing_weather
+  - missing_gas_conversion
+  - model_not_trained
+  - model_not_calibrated
+  - forecast_partial
+  - forecast_complete
+  - baseline_only
+environment_variables:
+  - ELEXON_API_KEY
+  - NATIONAL_GAS_API_KEY
+  - OPEN_METEO_API_KEY_OPTIONAL

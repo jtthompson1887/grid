@@ -1,0 +1,47 @@
+electricity:
+  bmrs_demand_outturn:
+    source_name: Elexon BMRS
+    source_dataset: demand_outturn
+    enabled: true
+    api_key_env: ELEXON_API_KEY
+  bmrs_demand_forecast:
+    source_name: Elexon BMRS
+    source_dataset: demand_forecast
+    enabled: true
+    api_key_env: ELEXON_API_KEY
+  neso_historic_demand:
+    source_name: NESO
+    source_dataset: historic_demand
+    enabled: true
+gas:
+  ngt_demand:
+    source_name: National Gas Transmission
+    source_dataset: demand
+    enabled: true
+    api_key_env: NATIONAL_GAS_API_KEY
+  ngt_forecast:
+    source_name: National Gas Transmission
+    source_dataset: forecast_demand
+    enabled: true
+    api_key_env: NATIONAL_GAS_API_KEY
+  ngt_calorific_value:
+    source_name: National Gas Transmission
+    source_dataset: gas_quality
+    enabled: true
+    api_key_env: NATIONAL_GAS_API_KEY
+weather:
+  open_meteo_forecast:
+    source_name: Open-Meteo
+    source_dataset: forecast
+    enabled: true
+    api_key_env: OPEN_METEO_API_KEY_OPTIONAL
+  open_meteo_historical:
+    source_name: Open-Meteo
+    source_dataset: historical_reanalysis
+    enabled: true
+    api_key_env: OPEN_METEO_API_KEY_OPTIONAL
+  met_office_weather_datahub:
+    source_name: Met Office Weather DataHub
+    source_dataset: placeholder_for_future_integration
+    enabled: false
+    api_key_env: MET_OFFICE_API_KEY
