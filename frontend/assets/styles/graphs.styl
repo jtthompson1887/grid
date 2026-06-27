@@ -1,0 +1,85 @@
+.graph
+  --graph-height: 250px
+  --axis-width: 40px
+  --axis-height: 64px
+  --axis-gap: 10px
+  --key-padding: 8px
+  display: grid
+  grid-template: unquote('auto var(--axis-height) / var(--axis-width) 1fr')
+  gap: unquote('calc(var(--axis-gap) - 0.5em) var(--axis-gap)')
+  position: relative
+  font-size: 12px
+  line-height: 1
+
+.graph > div
+  display: grid
+  text-align: right
+
+.graph > :nth-child(1)
+  grid-area: 1 / 1 / 2 / 3
+  grid-template-columns: var(--axis-width) 1fr
+  column-gap: var(--axis-gap)
+  align-content: space-between
+
+.graph > :nth-child(1) > :nth-child(even)
+  margin-top: calc(0.5em - 1px)
+  border-top: 1px solid var(--graph-line)
+
+.graph > :nth-child(2)
+  grid-area: 2 / 2 / 3 / 3
+  grid-auto-flow: column
+  justify-content: space-around
+
+.graph > :nth-child(2) > div
+  writing-mode: vertical-lr
+  transform: rotate(180deg)
+
+.graph svg
+  grid-area: 1 / 2 / 2 / 3
+  width: 100%
+  height: var(--graph-height)
+  margin: 0.5em 0
+
+polyline
+  fill: transparent
+  stroke: currentcolor
+  stroke-width: 2.5
+  vector-effect: non-scaling-stroke
+
+.graph rect
+  fill: transparent
+
+.graph rect:hover
+  fill: var(--graph-highlight)
+
+.graph svg + div
+  position: absolute
+  top: unquote('calc(var(--graph-height) / 2 + 0.5em)')
+  width: max-content
+  max-width: unquote('calc(100vw / 2 - 4 * var(--key-padding))')
+  padding: var(--key-padding)
+  background: var(--content-background)
+  color: var(--content-text)
+  border: 1px solid var(--key-line)
+  border-radius: var(--rounding)
+  text-align: left
+  transform: translateY(-50%)
+  pointer-events: none
+
+.graph svg + div > div
+  margin-bottom: var(--key-padding)
+  font-size: 16px
+  font-weight: 400
+  text-align: center
+
+.graph svg + div td:nth-child(1)::after
+  margin-top: 0
+
+.graph svg + div td:nth-child(3)
+  white-space: nowrap
+
+.graph svg + div td:nth-child(3)::after
+  content: none
+
+.visits-graph
+  margin: 1rem 0

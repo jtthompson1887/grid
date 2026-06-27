@@ -1,0 +1,87 @@
+#latest
+  display: grid
+  grid-template-columns: 1fr 1fr 1fr
+  grid-template-areas: "generation fossils transfers" "generation renewables transfers" "generation others storage"
+  gap: 1rem
+
+@media screen and (max-width: 1199px)
+  #latest
+    grid-template-columns: 1fr 1fr
+    grid-template-areas: "generation fossils" "generation renewables" "generation others" "transfers storage"
+
+@media screen and (max-width: 779px)
+  #latest
+    grid-template-columns: 1fr
+    grid-template-areas: "generation" "fossils" "renewables" "others" "transfers" "storage"
+
+#latest section
+  margin: 0
+
+#generation { grid-area: generation }
+#fossils    { grid-area: fossils }
+#renewables { grid-area: renewables }
+#others     { grid-area: others }
+#transfers  { grid-area: transfers }
+#storage    { grid-area: storage }
+
+.sources
+  width: 100%
+  margin: 0
+
+.sources.transfers
+  color: inherit
+
+.sources td
+  vertical-align: top
+
+.sources td:nth-child(1)
+  padding: 0 0 1em
+  background: transparent
+
+.sources td:nth-child(1)::after
+  content: ''
+  display: block
+  box-sizing: border-box
+  width: 1em
+  height: 1em
+  margin-top: 2px
+  background: currentcolor
+
+.sources.transfers td:nth-child(1)::after
+  border: 2px solid
+  background: transparent
+
+.sources td:nth-child(2)
+  width: 100%
+  padding: 0 0 1em 0.5em
+
+.sources td:nth-child(3),
+.sources td:nth-child(4)
+  padding: 0 0 1em 0.75em
+  text-align: right
+  white-space: nowrap
+
+.sources td:nth-child(1),
+.sources td:nth-child(3),
+.sources td:nth-child(4)
+  width: 0
+
+.sources td:nth-child(3)::after
+  content: 'GW'
+  opacity: var(--unit-opacity)
+
+.sources td:nth-child(4)::after
+  content: '%'
+  opacity: var(--unit-opacity)
+
+.sources tr:last-child td
+  padding-bottom: 0
+
+#fossils h2
+  background: #c45
+
+#renewables h2
+  background: #5b5
+
+#others h2
+  background: #27c

@@ -1,0 +1,44 @@
+// CSS custom properties for theming (kept as CSS vars for runtime dark mode)
+:root
+  --width: 36
+  --rounding: 4px
+  --table-width: 316px
+  --accent: #696
+  --background: #eee
+  --content-background: #fff
+  --content-text: #000
+  --heading-background: #aaa
+  --heading-text: #fff
+  --selected-background: #fffc
+  --help-background: #aaa
+  --help-text: #fff
+  --graph-line: #bbb
+  --graph-highlight: #0001
+  --key-line: #999
+  --unit-opacity: 0.4
+  --table-stripe: #f8f8f8
+
+@media (prefers-color-scheme: dark)
+  :root
+    --background: #000
+    --content-background: #222
+    --content-text: #eee
+    --heading-background: #444
+    --selected-background: #222c
+    --help-background: #888
+    --help-text: #000
+    --graph-line: #444
+    --graph-highlight: #fff1
+    --key-line: #666
+    --unit-opacity: 0.6
+    --table-stripe: #181818
+
+@font-face
+  font-family: 'Proza'
+  font-weight: 300
+  src: url('/proza-light.woff2') format('woff2')
+
+@font-face
+  font-family: 'Proza'
+  font-weight: 400
+  src: url('/proza-regular.woff2') format('woff2')
