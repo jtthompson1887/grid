@@ -1,0 +1,42 @@
+.pie-chart-container
+  display: grid
+  align-content: center
+  justify-content: center
+  max-width: 330px
+  aspect-ratio: 1
+  margin: 0 auto 1rem
+
+.pie-chart
+  display: grid
+  max-width: 300px
+  font-size: 16px
+
+.pie-chart > div,
+.pie-chart > svg
+  grid-row: 1 / 2
+  grid-column: 1 / 2
+
+.pie-chart > div
+  display: grid
+  justify-items: center
+  align-content: center
+  text-align: center
+
+.pie-chart > div > div:nth-child(1)
+  padding-top: 1.25em
+
+.pie-chart > div > div:nth-child(2)
+  display: block
+  width: 33%
+  height: 2px
+  margin: 0.25em 0
+  background: currentcolor
+
+.pie-chart > svg
+  width: 100%
+
+.pie-chart > svg > path
+  fill: currentcolor
+  stroke: var(--content-background)
+  stroke-width: 2
+  vector-effect: non-scaling-stroke

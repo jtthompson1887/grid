@@ -1,0 +1,86 @@
+[role="tablist"]
+  display: grid
+  grid-template-columns: 1fr 1fr 1fr 1fr
+  position: sticky
+  top: 0
+  z-index: 1
+  margin: -1rem -1rem 1rem
+
+[role="tablist"] h2
+  margin: 0
+  border-radius: 0
+  text-align: center
+  -webkit-user-select: none
+  user-select: none
+
+[role="tablist"] h2:first-child
+  border-top-left-radius: var(--rounding)
+
+[role="tablist"] h2:last-child
+  border-top-right-radius: var(--rounding)
+
+h2[aria-selected="true"]
+  -webkit-backdrop-filter: saturate(180%) blur(20px)
+  backdrop-filter: saturate(180%) blur(20px)
+  background: var(--selected-background)
+  color: var(--content-text)
+
+h2[aria-selected="false"]
+  cursor: pointer
+
+@media screen and (max-width: 34rem)
+  [role="tablist"] h2
+    text-transform: capitalize
+
+  [role="tablist"] span
+    display: none
+
+[role="tabpanel"]
+  display: grid
+  grid-template-columns: 1fr var(--table-width) 1fr
+  grid-template-areas: "pie status demand" "pie equation demand" "pie table demand" "price table generation" "emissions table transfers"
+  gap: 1rem 3rem
+
+[role="tabpanel"]:nth-child(n + 3)
+  display: none
+
+[role="tabpanel"] > div
+  min-width: 0
+
+[role="tabpanel"] > :nth-child(1) { grid-area: status }
+[role="tabpanel"] > :nth-child(2) { grid-area: equation }
+[role="tabpanel"] > :nth-child(3) { grid-area: pie }
+[role="tabpanel"] > :nth-child(4) { grid-area: table }
+[role="tabpanel"] > :nth-child(5) { grid-area: price }
+[role="tabpanel"] > :nth-child(6) { grid-area: emissions }
+[role="tabpanel"] > :nth-child(7) { grid-area: demand }
+[role="tabpanel"] > :nth-child(8) { grid-area: generation }
+[role="tabpanel"] > :nth-child(9) { grid-area: transfers }
+
+[role="tabpanel"] > :is(:nth-child(1), :nth-child(2))
+  padding-bottom: 1rem
+
+[role="tabpanel"] > :is(:nth-child(1), :nth-child(2), :nth-child(4))
+  width: 100%
+  max-width: var(--table-width)
+  justify-self: center
+
+[role="tabpanel"] > :nth-child(3)
+  align-self: center
+  justify-self: center
+
+@media screen and (max-width: 1023px)
+  [role="tabpanel"]
+    grid-template-columns: var(--table-width) 1fr
+    grid-template-areas: "pie price" "status emissions" "equation emissions" "table emissions" "table demand" "table generation" "table transfers"
+
+@media screen and (max-width: 767px)
+  [role="tabpanel"]
+    grid-template-columns: 1fr
+    grid-template-areas: none
+
+  [role="tabpanel"] > :nth-child(n)
+    grid-area: auto
+
+  [role="tabpanel"] > :is(:nth-child(3), :nth-child(4))
+    padding-bottom: 1rem

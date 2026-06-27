@@ -1,0 +1,53 @@
+*,
+::before,
+::after
+  box-sizing: border-box
+
+html
+  height: 100%
+  font-family: Proza, sans-serif
+  font-weight: 300
+  font-size: clamp(18px, calc(100vw / var(--width)), 20px)
+  font-feature-settings: 'tnum'
+  line-height: 1.5
+  -webkit-text-size-adjust: none
+  text-size-adjust: none
+
+body
+  display: grid
+  grid-template-rows: max-content 1fr max-content
+  height: 100%
+  margin: 0
+  background: var(--background)
+  color: var(--content-text)
+
+section
+  box-sizing: border-box
+  padding: 1rem
+  border-radius: var(--rounding)
+  background: var(--content-background)
+  color: var(--content-text)
+
+p
+  margin: 0
+  font-size: 1rem
+  line-height: 1.5
+
+p + p
+  margin-top: 1rem
+
+table
+  border-collapse: collapse
+
+a
+  color: var(--accent)
+  text-decoration-color: transparent
+  text-decoration-thickness: 0.1em
+  text-underline-offset: 0.15em
+  transition: text-decoration-color 0.2s
+
+a:hover
+  text-decoration-color: var(--accent)
+
+img
+  vertical-align: bottom

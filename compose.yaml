@@ -35,13 +35,45 @@ services:
     command:
       sh -c "php /var/grid/update.php && sleep infinity"
 
+  python-api:
+    build:
+      target: python
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - ./.env:/var/grid/.env
+      - ./grid:/var/grid/grid
+    command: uvicorn grid.api.main:app --host 0.0.0.0 --port 8000 --reload
+    working_dir: /var/grid
+
+  python-updater:
+    build:
+      target: python
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - ./.env:/var/grid/.env
+      - ./grid:/var/grid/grid
+      - ./update.py:/var/grid/update.py
+    command: sh -c "python /var/grid/update.py && sleep infinity"
+    working_dir: /var/grid
+
+  nuxt:
+    build:
+      target: nuxt
+    environment:
+      - API_BASE_URL=http://python-api:8000
+
   web:
     build:
       target: web
     ports:
       - "9714:80"
-    volumes:
-      - ./public:/usr/share/nginx/html
+    depends_on:
+      - nuxt
+      - python-api
 
 volumes:
   database:
