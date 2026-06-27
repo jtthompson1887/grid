@@ -5,8 +5,8 @@
   --axis-gap: 10px
   --key-padding: 8px
   display: grid
-  grid-template: auto var(--axis-height) / var(--axis-width) 1fr
-  gap: calc(var(--axis-gap) - 0.5em) var(--axis-gap)
+  grid-template: unquote('auto var(--axis-height) / var(--axis-width) 1fr')
+  gap: unquote('calc(var(--axis-gap) - 0.5em) var(--axis-gap)')
   position: relative
   font-size: 12px
   line-height: 1
@@ -54,9 +54,9 @@ polyline
 
 .graph svg + div
   position: absolute
-  top: calc(var(--graph-height) / 2 + 0.5em)
+  top: unquote('calc(var(--graph-height) / 2 + 0.5em)')
   width: max-content
-  max-width: calc(100vw / 2 - 4 * var(--key-padding))
+  max-width: unquote('calc(100vw / 2 - 4 * var(--key-padding))')
   padding: var(--key-padding)
   background: var(--content-background)
   color: var(--content-text)
