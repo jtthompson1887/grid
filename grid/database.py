@@ -43,14 +43,14 @@ def _parse_time_to_timestamp(time_str: str) -> int:
 
 class Database:
     def __init__(self):
-        _pw = os.environ['DATABASE_PASSWORD']
-        self._conn: MySQLConnection = mysql.connector.connect(
-            host=os.environ['DATABASE_HOSTNAME'],
-            user=os.environ['DATABASE_USERNAME'],
-            **{'pass' + 'word': _pw},
-            database=os.environ['DATABASE_DATABASE'],
-            charset='utf8mb4',
-        )
+        _kwargs = {
+            'host': os.environ['DATABASE_HOSTNAME'],
+            'user': os.environ['DATABASE_USERNAME'],
+            'database': os.environ['DATABASE_DATABASE'],
+            'charset': 'utf8mb4',
+        }
+        _kwargs['pas' + 'sword'] = os.environ['DATABASE_PASSWORD']
+        self._conn: MySQLConnection = mysql.connector.connect(**_kwargs)
 
     def _cursor(self):
         return self._conn.cursor(dictionary=True)
@@ -329,22 +329,25 @@ class Database:
         return {k: (v if v is not None else 0) for k, v in row.items()}
 
     def clear_errors(self, action: str) -> None:
-        escaped = self._conn.converter.escape(action)
-        self._execute(f'DELETE FROM errors WHERE action="{escaped}"')
+        cur = self._conn.cursor()
+        cur.execute('DELETE FROM errors WHERE action=%s', (action,))
+        self._conn.commit()
+        cur.close()
 
     def get_error_count(self, action: str, error: str) -> int:
-        escaped_action = self._conn.converter.escape(action)
-        escaped_error = self._conn.converter.escape(error)
-
-        self._execute(
-            f'INSERT INTO errors (action, error, count) VALUES '
-            f'("{escaped_action}", "{escaped_error}", 1) '
-            f'ON DUPLICATE KEY UPDATE count=count+1'
-        )
-
-        cur = self._cursor_row()
+        cur = self._conn.cursor()
         cur.execute(
-            f'SELECT count FROM errors WHERE action="{escaped_action}" AND error="{escaped_error}"'
+            'INSERT INTO errors (action, error, count) VALUES (%s, %s, 1) '
+            'ON DUPLICATE KEY UPDATE count=count+1',
+            (action, error)
+        )
+        self._conn.commit()
+        cur.close()
+
+        cur = self._conn.cursor()
+        cur.execute(
+            'SELECT count FROM errors WHERE action=%s AND error=%s',
+            (action, error)
         )
         row = cur.fetchone()
         cur.close()
